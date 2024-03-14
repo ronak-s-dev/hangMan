@@ -45,20 +45,36 @@ O   |
  O   |
 /|\  |
 / \  |
-    ===''']
+    ===''','''
+ +---+
+[O  |
+/|\ |
+/ \ |
+ ===''', '''
+ +---+
+[O] |
+/|\ |
+/ \ |
+ ===''']
 
-words = '''ant baboon badger bat bear beaver camel cat clam cobra cougar
-coyote crow deer dog donkey duck eagle ferret fox frog goat goose hawk
-lion lizard llama mole monkey moose mouse mule newt otter owl panda
-parrot pigeon python rabbit ram rat raven rhino salmon seal shark sheep
-skunk sloth snake spider stork swan tiger toad trout turkey turtle
-weasel whale wolf wombat zebra'''.split()
+#update words list using dictonary method
+words = {
+    'Colors':'red orange yellow green blue indigo violet white black brown'.split(),
+    'Shapes':'square triangle rectangle circle ellipse rhombus trapezoid chevron pentagon hexagon septagon octagon'.split(),
+    'Fruits':'apple orange lemon lime pear watermelon grape grapefruit cherry banana cantaloupe mango strawberry tomato'.split(),
+    'Animals':'bat bear beaver cat cougar crab deer dog donkey duck eagle fish frog goat leech lion lizard monkey moose mouse otter owl panda python rabbit rat shark sheep skunk squid tiger turkey turtle weasel whale wolf wombat zebra'.split()
+}
 
-def randomWord():
-    wordPosition = random.randint(0 , (len(words)) - 1)
-    return words[wordPosition]
+def generateRandomWord():
+    key = random.choice(list(words.keys()))                     #randomly selects a key from the words dictionary
+    wordPosition = random.randint(0, len(words[key]) - 1)       #selects the index value randomly in the given range
+    return [words[key][wordPosition], key]                      #returns the word and the key it is associated with
 
-secretWord = randomWord() #store the secret word
+#def randomWord():
+    #wordPosition = random.randint(0 , (len(words)) - 1)
+    #return words[wordPosition]
+
+secretWord, secretSet = generateRandomWord() #store the secret word
 
 
 def displayConsole(correctLetters,missedLetters,secretWord):
@@ -101,6 +117,7 @@ missedLetters = ''  #contains all the letters that dont match with the secretwor
 gameEnded = False
 
 while True:
+    print('The secret word is in the category: ', secretSet)
     displayConsole(correctLetters,missedLetters,secretWord)
     guess = getUserGuess(missedLetters + correctLetters)  #pass argument of all entered letters into the getUserGuess function
 
@@ -132,7 +149,7 @@ while True:
             missedLetters = ''
             correctLetters = ''
             gameEnded = False
-            secretWord = randomWord()
+            secretWord, secretSet= generateRandomWord()
         else:
             break
 
